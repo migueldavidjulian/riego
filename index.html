@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Sistema de Riego</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('imagen.jpg'); /* Cambia esta URL por la imagen que desees usar */
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            padding: 20px;
+            color: white;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        h1 {
+            color: #fff;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #messageBox {
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #temperatureDisplay {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Control de Riego Automático</h1>
+
+        <!-- Botón para iniciar la conexión con ESP8266 -->
+        <button id="connectBtn">Iniciar Conexión</button>
+
+        <!-- Botones para las bombas -->
+        <div>
+            <h2>Activación manual de bombas</h2>
+	    <button id="pump1Btn">Bomba 1</button>
+            <button id="pump2Btn">Bomba 2</button>
+        </div>
+
+        <!-- Cuadro de texto para enviar mensajes -->
+        <div id="messageBox">
+            <input type="text" id="messageInput" placeholder="Escribe un mensaje">
+            <button id="sendMessageBtn">Enviar Mensaje</button>
+        </div>
+
+        <!-- Espacio para mostrar la temperatura -->
+        <div id="temperatureDisplay">
+            Temperatura Actual: <span id="temperatureValue">--</span>°C
+        </div>
+    </div>
+
+    <script>
+        // Aquí se podrían agregar funciones JavaScript para interactuar con el ESP8266
+
+        document.getElementById('connectBtn').addEventListener('click', function() {
+            alert('Conexión con ESP8266 iniciada');
+            // Lógica para iniciar la conexión con ESP8266
+        });
+
+        document.getElementById('pump1Btn').addEventListener('click', function() {
+            alert('Bomba 1 activada');
+            // Lógica para activar/desactivar la bomba 1
+        });
+
+        document.getElementById('pump2Btn').addEventListener('click', function() {
+            alert('Bomba 2 activada');
+            // Lógica para activar/desactivar la bomba 2
+        });
+
+        document.getElementById('sendMessageBtn').addEventListener('click', function() {
+            var message = document.getElementById('messageInput').value;
+            alert('Mensaje enviado: ' + message);
+            // Lógica para enviar el mensaje al ESP8266
+        });
+
+        // Simulación de actualización de temperatura
+        setInterval(function() {
+            var temperature = (Math.random() * 10 + 20).toFixed(1); // Genera una temperatura aleatoria entre 20 y 30
+            document.getElementById('temperatureValue').textContent = temperature;
+        }, 2000); // Actualiza cada 1 segundos
+    </script>
+
+</body>
+</html>
