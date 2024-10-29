@@ -90,32 +90,31 @@
     </div>
 
     <script>
-        const boton1=document.getElementById('boton1');
-        const boton2=document.getElementById('boton2');
-	const temperaturaSpan= document.getElementById('temperatura');
+        const boton1 = document.getElementById('boton1');
+const boton2 = document.getElementById('boton2');
+const temperaturaSpan = document.getElementById('temperatura');
 
-function enviarSolicitud(accion){
-	fetch('http://192.168.42.128/${accion}')
-	.then(response => response.text())
-	.then(data=>{
-		temperaturaSpan.textContent=data;})
-	.catch(error=>{
-		console.error('Error:', error);
-	});
-
+function enviarSolicitud(accion) {
+  fetch(`http://192.168.43.213/${accion}`)
+    .then(response => response.text())
+    .then(data => {
+      temperaturaSpan.textContent = data;
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }
 
-boton1.addEventListener('click',()=> enviarSolicitud('activar1'));
-boton2.addEventListener('click',()=> enviarSolicitud('activar2'));        
+boton1.addEventListener('click', () => enviarSolicitud('activar1'));
+boton2.addEventListener('click', () => enviarSolicitud('activar2'));
 
-enviarSolicitud('obtenerTemperatura');
-
-        // Simulación de actualización de temperatura
-        setInterval(function() {
-            var temperatura = (Math.random() * 10 + 20).toFixed(1); // Genera una temperatura aleatoria entre 20 y 30
-            document.getElementById('temperatura').textContent = temperatur;
-        }, 2000); // Actualiza cada 1 segundos
+// Simulación de actualización de temperatura
+setInterval(function() {
+  const temperature = (Math.random() * 10 + 20).toFixed(1); // Genera una temperatura aleatoria entre 20 y 30
+  document.getElementById('temperatura').textContent = temperature;
+}, 2000); // Actualiza cada 2 segundos
     </script>
 	
 </body>
 </html>
+
