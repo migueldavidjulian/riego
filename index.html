@@ -89,16 +89,22 @@
         </div>
     </div>
 
-    <script>
-        const boton1 = document.getElementById('boton1');
+   <script>
+      const boton1 = document.getElementById('boton1');
 const boton2 = document.getElementById('boton2');
 const temperaturaSpan = document.getElementById('temperatura');
+let intervalId; // Variable para almacenar el ID del intervalo
 
 function enviarSolicitud(accion) {
+  clearInterval(intervalId); // Detenemos la simulación al hacer clic
   fetch(`http://192.168.43.213/${accion}`)
     .then(response => response.text())
     .then(data => {
       temperaturaSpan.textContent = data;
+      intervalId = setInterval(function() {
+        const temperature = (Math.random() * 10 + 20).toFixed(1);
+        temperaturaSpan.textContent = temperature;
+      }, 2000); // Reiniciamos la simulación después de recibir la respuesta
     })
     .catch(error => {
       console.error('Error:', error);
