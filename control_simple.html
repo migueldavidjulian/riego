@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Control Remoto </title>
+    <style>
+        body {
+            background-image: url('https://th.bing.com/th?id=OIP.ttCDGuJS40IKTg5xZLZHtgHaE7&w=306&h=204&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2.jpg'); /* Reemplaza con la ruta de tu imagen */
+            background-size: cover;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        #control-panel {
+            background-color: rgba(0, 255, 0, 0.8); /* Verde semitransparente */
+            padding: 20px;
+            border-radius: 10px;
+            margin: auto;
+            width: 300px;
+        }
+
+        button {
+            background-color: #4CAF50; /* Verde */
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="control-panel">
+        <h1>Control Remoto</h1>
+        <button type="button" onclick="conectar()">Iniciar Conexión</button>
+        <button type="button" onclick="activarBomba(1)">Bomba 1</button>
+        <button type="button" onclick="activarBomba(2)">Bomba 2</button>
+        <div id="temperatura">Temperatura: -</div>
+    </div>
+
+  <script>
+  let bomba1Estado = false;
+  let bomba2Estado = false;
+
+  function conectar() {
+    fetch('/conectar')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al conectar');
+        }
+        console.log('Conectado');
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+  function activarBomba(bomba) {
+    fetch(`/activar_bomba?bomba=${bomba}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al activar la bomba');
+        }
+        if (bomba === 1) {
+          bomba1Estado = true;
+          setTimeout(() => {
+            bomba1Estado = false;
+            fetch(`/desactivar_bomba?bomba=1`);
+          }, 7 * 60 * 1000); // 7 minutos en milisegundos
+        } else if (bomba === 2) {
+          bomba2Estado = true;
+          setTimeout(() => {
+            bomba2Estado = false;
+            fetch(`/desactivar_bomba?bomba=2`);
+          }, 3 * 1000); // 3 segundos en milisegundos
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+  function actualizarTemperatura() {
+    fetch('/temperatura')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('temperatura').textContent = `Temperatura: ${data.temperatura} °C`;
+      })
+      .catch(error => {
+        console.error('Error al obtener la temperatura:', error);
+      });
+  }
+
+  // Iniciar la actualización de la temperatura cada 2 segundos
+  setInterval(actualizarTemperatura, 5000);
+</script>
+</body>
+</html>
